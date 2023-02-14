@@ -1,0 +1,772 @@
+\documentclass[phys334]{subfiles}
+
+%% ========================================================
+%% document
+
+\begin{document}
+
+    \section{Introduction}
+
+    \subsection{Review of Postulates and Formalism}
+
+    \begin{postulate}{}
+        The state of a quantum system can be described by a wavefunction in a Hilbert space.
+    \end{postulate}
+
+    \np
+    We denote the elements of the Hilbert space as $\left| \psi \right\rangle$, and the complex conjugate by $\left\langle \psi \right|$.
+
+    \begin{postulate}{}
+        Every observable/measurable quantity is described by an operator $\hat{A}$ on a Hilbert space.
+    \end{postulate}
+
+    \begin{postulate}{}
+        The result of measuring an observable is one of its eigenvalues.
+    \end{postulate}
+
+    \begin{postulate}{Born's Rule}
+        For an observable $\hat{A}$ and its eigenvalue $a$ correspoinding to $\left| a \right\rangle$, the probability of measuring $a$ is
+        \begin{equation*}
+            \PP\left( a \right) = \left| \left\langle a | \psi \right\rangle \right|^{2},
+        \end{equation*}
+        where $\left| \psi \right\rangle$ is the quantum state before the measurement.
+    \end{postulate}
+
+    \begin{postulate}{}
+        For an observable $\hat{A}$, if an eigenvalue $a$ is measured, then the quantum state after the measurement is $\left| a \right\rangle$.
+    \end{postulate}
+
+    \begin{postulate}{Schrodinger Equation}
+        The time evolution of a quantum state $\left| \psi \right\rangle$ satisfies
+        \begin{equation*}
+            i\hbar \frac{\partial}{\partial t} \left| \psi \right\rangle = H\left| \psi \right\rangle,
+        \end{equation*}
+        where $H$ is the Hamiltonian operator.
+    \end{postulate}
+
+    \subsection{Time Evolution Operator}
+
+    Consider the time dependent Schrodinger equation
+    \begin{equation*}
+        i\hbar \frac{\partial}{\partial t} \left| \psi \right\rangle = H\left| \psi \right\rangle.
+    \end{equation*}
+    Then the state $\left| \psi \right\rangle$ evolves over time according to the \textit{time evolution operator} $U\left( t,t_0 \right)$ by
+    \begin{equation*}
+        \left| \psi\left( t \right) \right\rangle = U\left( t,t_0 \right) \left| \psi\left( t_0 \right) \right\rangle
+    \end{equation*}
+    with the initial condition $U\left( t_0,t_0 \right) = I$, the identity operator. Note that $U$ has to be unitary, since we want to preserve the norm. Therefore, the differential equation for $U$ is given by
+    \begin{equation*}
+        i\hbar \frac{\partial}{\partial t} U\left( t,t_0 \right)\left| \psi\left( t_0 \right) \right\rangle = HU\left( t,t_0 \right)\left| \psi\left( t_0 \right) \right\rangle.
+    \end{equation*}
+    Rewriting in terms of $U$,
+    \begin{equation*}
+        \frac{\partial}{\partial t} U\left( t,t_0 \right) = -\frac{i}{\hbar} HU\left( t,t_0 \right).
+    \end{equation*}
+    In case $H$ is independent of the time,
+    \begin{equation*}
+        U = Ae^{-\frac{i}{\hbar}Ht},
+    \end{equation*}
+    where $A$ is a constant depending on the initial condition $U\left( t_0,t_0 \right)=I$. That is,
+    \begin{equation*}
+        I = U\left( t_0,t_0 \right) = Ae^{-\frac{i}{\hbar}Ht_0} \implies A = e^{\frac{i}{\hbar}Ht_0}.
+    \end{equation*}
+
+    This solution is useful when paired with the \textit{time independent Schrodinger equation}:
+    \begin{equation*}
+        H\left| E_n \right\rangle = E_n\left| E_n \right\rangle.
+    \end{equation*}
+    In this case, for any analytic function $f$,
+    \begin{equation*}
+        f\left( H \right)\left| E_n \right\rangle = f\left( E_n \right)\left| E_n \right\rangle,
+    \end{equation*}
+    so in particular,
+    \begin{equation*}
+        U\left( t,t_0 \right)\left| E_n \right\rangle = e^{-\frac{i}{\hbar}E_n\left( t-t_0 \right)}\left| E_n \right\rangle.
+    \end{equation*}
+    For a general state $\left| \psi\left( t_0 \right) \right\rangle$, we write it down as a linear combination of energy eigenstates,
+    \begin{equation*}
+        \left| \psi\left( t_0 \right) \right\rangle = \left( \sum^{}_{n} \left| E_n \right\rangle \left\langle E_n \right| \right) \left| \psi\left( t_0 \right) \right\rangle = \sum^{}_{n} c_n\left| E_n \right\rangle,
+    \end{equation*}
+    where $c_n = \left\langle E_n | \psi\left( t_0 \right) \right\rangle$. Then,
+    \begin{equation*}
+\left| \psi\left( t \right) \right\rangle = U\left( t,t_0 \right)\left| \psi\left( t_0 \right) \right\rangle = e^{-\frac{i}{\hbar}H\left( t-t_0 \right)} \sum^{}_{n}c_n\left| E_n \right\rangle = \sum^{}_{n} c_n e^{-\frac{i}{\hbar}E_n\left( t-t_0 \right)} \left| E_n \right\rangle.
+    \end{equation*}
+    Thus
+    \begin{equation*}
+        U\left( t,t_0 \right) = \sum^{}_{n} e^{-\frac{i}{\hbar}E_n\left( t-t_0 \right)} \left| E_n \right\rangle \left\langle E_n \right|.
+    \end{equation*}
+
+    \begin{example}{Time Evolution of Spin-$\frac{1}{2}$}
+        Let
+        \begin{equation*}
+            H = \hbar\Omega\sigma_x = \hbar\Omega \left( \left| \uparrow \right\rangle \left\langle \downarrow \right| + \left| \downarrow \right\rangle \left\langle \uparrow \right| \right) = \hbar\Omega
+            \begin{bmatrix}
+            	0 & 1 \\
+            	1 & 0 \\
+            \end{bmatrix},
+        \end{equation*}
+        where $\left| \uparrow \right\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix} , \left| \downarrow \right\rangle = \begin{bmatrix} 0\\1 \end{bmatrix}$. Note that the energy eigenvectors are
+        \begin{equation*}
+            \begin{aligned}
+                \left| E_1 \right\rangle & = \frac{1}{\sqrt{2}} \left( \left| \uparrow \right\rangle + \left| \downarrow \right\rangle \right) \text{ corresponding to $\hbar\Omega=E_1$} \\
+                \left| E_2 \right\rangle & = \frac{1}{\sqrt{2}} \left( \left| \uparrow \right\rangle - \left| \downarrow \right\rangle \right) \text{ corresponding to $-\hbar\Omega=E_2$}
+            \end{aligned} .
+        \end{equation*}
+
+        Consider
+        \begin{equation*}
+            \left| \psi\left( 0 \right) \right\rangle = \left| \downarrow \right\rangle.
+        \end{equation*}
+        Then the coefficients with respect to the basis $\left( \left| E_1 \right\rangle,\left| E_2 \right\rangle \right)$ are
+        \begin{equation*}
+            \begin{aligned}
+                c_1 & = \left\langle E_1 | \downarrow \right\rangle = \frac{1}{\sqrt{2}}\left( \left\langle \uparrow \right|+\left\langle \downarrow \right| \right) \left| \downarrow \right\rangle = \frac{1}{\sqrt{2}} \\
+                c_2 & = \left\langle E_2 | \downarrow \right\rangle = \frac{1}{\sqrt{2}}\left( \left\langle \uparrow \right|-\left\langle \downarrow \right| \right) \left| \downarrow \right\rangle = - \frac{1}{\sqrt{2}}
+            \end{aligned} ,
+        \end{equation*}
+        which means
+        \begin{equation*}
+            \left| \psi\left( 0 \right) \right\rangle = \frac{1}{\sqrt{2}} \left| E_1 \right\rangle - \frac{1}{\sqrt{2}}\left| E_2 \right\rangle.
+        \end{equation*}
+        It follows that
+        \begin{equation*}
+            \begin{aligned}
+                \left| \psi\left( t \right) \right\rangle & = U\left( t,0 \right)\left| \psi\left( 0 \right) \right\rangle 
+                = \left( \sum^{}_{n} e^{-\frac{i}{\hbar}E_nt} \left| E_n \right\rangle \left\langle E_n \right| \right) \left| \psi\left( 0 \right) \right\rangle
+                = \left( e^{-i\Omega t}\left| E_1 \right\rangle \left\langle E_1 \right| + e^{i\Omega t} \left| E_2 \right\rangle \left\langle E_2 \right| \right) \frac{1}{\sqrt{2}} \left( \left| E_1 \right\rangle-\left| E_2 \right\rangle \right)  \\
+                                                          & = \frac{1}{\sqrt{2}}e^{-i\Omega t}\left| E_1 \right\rangle - \frac{1}{\sqrt{2}} e^{i\Omega t} \left| E_2 \right\rangle
+                                                          = \frac{1}{2} e^{-i\Omega t} \left( \left| \uparrow \right\rangle+\left| \downarrow \right\rangle \right) - \frac{1}{2}e^{i\Omega t} \left( \left| \uparrow \right\rangle-\left| \downarrow \right\rangle \right) 
+                                                          = \frac{1}{2} \left( e^{-i\Omega t}-e^{i\Omega t} \right)\left| \uparrow \right\rangle + \frac{1}{2} \left( e^{-\Omega t}+e^{i\Omega t} \right)\left| \downarrow \right\rangle \\
+                                                          & = i\sin\left( \Omega t \right)\left| \uparrow \right\rangle + \cos\left( \Omega t \right)\left| \downarrow \right\rangle.
+            \end{aligned} 
+        \end{equation*}
+    \end{example}
+    
+    \rruleline
+
+    \subsection{Harmonic Oscillator}
+
+    \np Consider the Hamiltonian operator
+    \begin{equation}
+        H = \frac{p^{2}}{2m} = \frac{1}{2} m\omega^{2} x^{2}.
+    \end{equation}
+    Suppose $H\left| \psi \right\rangle = E\left| \psi \right\rangle$, where $E$ is an eigenvalue of $H$. How do we calculate $E,\left| \psi \right\rangle$?
+
+    \np First approach: substitute
+    \begin{equation}
+        p = -i\hbar \frac{\partial}{\partial x}
+    \end{equation}
+    into [1.1]. We won't use this approach, as it does not give much intuition to the problem.
+
+    \np Second approach: rewrite Hamiltonian in terms of \textit{ladder operators}. Let
+    \begin{equation*}
+        a = \frac{1}{\sqrt{2\hbar m\omega}} \left( ip + m\omega x \right),
+    \end{equation*}
+    so that
+    \begin{equation*}
+        a^{\dagger} = \frac{1}{\sqrt{2\hbar m\omega}}\left( -ip+m\omega x \right).
+    \end{equation*}
+    Then, using the commutator formula $\left[ x,p \right] = i\hbar$,
+    \begin{equation*}
+        \begin{aligned}
+            a^{\dagger}a & = \frac{1}{2\hbar m\omega} \left( -ip+m\omega x \right)\left( ip+m\omega x \right) = \frac{1}{2\hbar m\omega} \left( p^{2}+im\omega\left( xp-px \right)+m^{2}\omega^{2}x^{2} \right) \\
+                         & = \frac{1}{2\hbar m\omega} \left( p^{2}+im\omega\left[ x,p \right]+m^{2}\omega^{2}x^{2} \right) = \frac{1}{2\hbar m\omega} \left( p^{2}+im\omega i\hbar+m^{2}\omega^{2}x^{2} \right) \\
+                         & = \frac{1}{2\hbar m\omega} \left( p^{2}+m^{2}\omega^{2}x^{2}-\hbar m\omega \right) = \frac{1}{\hbar\omega} \left( \frac{p^{2}}{2m} + \frac{1}{2} m\omega^{2}x^{2} \right) - \frac{1}{2} = \frac{1}{\hbar\omega} H - \frac{1}{2}.
+        \end{aligned} 
+    \end{equation*}
+    Thus we conclude
+    \begin{equation}
+        H = \hbar\omega\left( a^{\dagger}a+\frac{1}{2} \right).
+    \end{equation}
+    Observe that [1.3] tells us that the eigenvectors of $H$ are precisely the eigenvectors of $a^{\dagger}a$; 
+    \begin{equation*}
+        a^{\dagger}a\left| E_n \right\rangle = n\left| E_n \right\rangle \implies H\left| E_n \right\rangle = \hbar\omega\left( n+\frac{1}{2} \right)\left| E_n \right\rangle.
+    \end{equation*}
+
+    \np We can find $n$ using commutators. First
+    \begin{equation*}
+        \begin{aligned}
+            \left[ a,a^{\dagger} \right] & = \frac{1}{2\hbar m\omega} \left[ ip+m\omega x, -ip+m\omega x \right] = \frac{1}{2\hbar m\omega} \left( \left[ ip,-ip \right] + \left[ ip,m\omega x \right] + \left[ m\omega x,-ip \right] + \left[ m\omega x, m\omega x \right]\right) \\
+                                         & = \frac{1}{2\hbar m\omega} \left( im\omega\left[ p,x \right] -im\omega \left[ x,p \right] \right) = \frac{i}{2\hbar} \left( -i\hbar-i\hbar \right) = 1.
+        \end{aligned} 
+    \end{equation*}
+Now, observe that $a\left| E_n \right\rangle$ is an eigenstate of $a^{\dagger}a$ corresponding to $n-1$: since $\left[ a,a^{\dagger} \right]=1$,
+    \begin{equation*}
+        a^{\dagger}a\left( a\left| E_n \right\rangle \right) = \left( aa^{\dagger}-1 \right)a\left| E_n \right\rangle = a\left( a^{\dagger}a \right)\left| E_n \right\rangle - a\left| E_n \right\rangle = an\left| E_n \right\rangle - a\left| E_n \right\rangle = \left( n-1 \right)a\left| E_n \right\rangle.
+    \end{equation*}
+    Hence
+    \begin{equation*}
+        a\left| E_n \right\rangle = c_n\left| E_{n-1} \right\rangle.
+    \end{equation*}
+    Similarly,
+    \begin{equation*}
+        a^{\dagger}\left| E_n \right\rangle = b_n\left| E_{n+1} \right\rangle.
+    \end{equation*}
+    
+    Let us find what $c_n,b_n$ are. Observe
+    \begin{equation*}
+        n = \left\langle E_n \right|n\left| E_n \right\rangle = \left\langle E_n \right|a^{\dagger}a\left| E_n \right\rangle = \left\langle E_{n-1} \right| c_n^{*}c_n \left| E_{n-1} \right\rangle = \left| c_n \right|^{2}.
+    \end{equation*}
+    Therefore $n$ is nonnegative and
+    \begin{equation*}
+        c_n = \sqrt{n}
+    \end{equation*}
+    or
+    \begin{equation*}
+        a\left| E_n \right\rangle = \sqrt{n}\left| E_{n-1} \right\rangle.
+    \end{equation*}
+
+    In a similar fashion, we find out
+    \begin{equation*}
+        b_n = \sqrt{n+1},
+    \end{equation*}
+    so that
+    \begin{equation*}
+        a^{\dagger}\left| E_n \right\rangle = \sqrt{n+1}\left| E_{n+1} \right\rangle.
+    \end{equation*}
+
+    \np Note that we have to have $n$ to be an integer, so that
+    \begin{equation*}
+        a^n\left| E_n \right\rangle = 0.
+    \end{equation*}
+
+    \np Since we may write $x,p$ in terms of the ladder operators as
+    \begin{equation*}
+        x = \sqrt{\frac{\hbar}{2m\omega}}\left( a+a^{\dagger} \right)
+    \end{equation*}
+    and
+    \begin{equation*}
+        p = i\sqrt{\frac{\hbar m\omega}{2}}\left( a^{\dagger}-a \right),
+    \end{equation*}
+    we have
+    \begin{equation*}
+        \left< x^{2} \right> = \left\langle E_n \right|x^{2}\left| E_n \right\rangle = \frac{\hbar}{2m\omega} \left\langle E_n \right|aa+aa^{\dagger}+a^{\dagger}a+a^{\dagger}a^{\dagger}\left| E_n \right\rangle = \frac{\hbar}{2m\omega} \left\langle E_n \right|aa+2a^{\dagger}a+1+a^{\dagger}a^{\dagger}\left| E_n \right\rangle.
+    \end{equation*}
+    But, using orthonormality of $\left\lbrace \left| E_n \right\rangle \right\rbrace^{\infty}_{n=0}$, we obtain
+    \begin{equation*}
+        \left\langle E_n \right|aa\left| E_n \right\rangle = \left\langle E_n \right|a^{\dagger}a^{\dagger}\left| E_n \right\rangle = 0,
+    \end{equation*}
+    so that
+    \begin{equation*}
+        \left< x^{2} \right> = \frac{\hbar}{2m\omega}\left\langle E_n \right|2a^{\dagger}a+1\left| E_n \right\rangle = \frac{\hbar}{2m\omega} \left( 2n+1 \right) \left\langle E_n | E_n \right\rangle = \frac{\hbar}{2m\omega} \left( 2n+1 \right).
+    \end{equation*}
+
+    \begin{summary}{Harmonic Oscillator, Ladder Operators}
+        Given Hamiltonian
+        \begin{equation*}
+            H = \frac{1}{2}m\omega^{2}x^{2},
+        \end{equation*}
+        we have that
+        \begin{equation*}
+            H = \hbar\omega\left( a^{\dagger}a+\frac{1}{2} \right),
+        \end{equation*}
+        where
+        \begin{equation*}
+            a = \frac{1}{\sqrt{2\hbar m\omega}}\left( ip+m\omega x \right)
+        \end{equation*}
+        is the \textit{ladder operator}. $a,a^{\dagger}$ acts on the energy eigenstates by
+        \begin{equation*}
+            a\left| E_n \right\rangle = \sqrt{n}\left| E_{n-1} \right\rangle
+        \end{equation*}
+        and
+        \begin{equation*}
+            a^{\dagger}\left| E_n \right\rangle = \sqrt{n+1}\left| E_{n+1} \right\rangle .
+        \end{equation*}
+        With respect to the ladder operators, $x,p$ can be written as
+        \begin{equation*}
+            x = \sqrt{\frac{\hbar}{2m\omega}}\left( a+a^{\dagger} \right)
+        \end{equation*}
+        and
+        \begin{equation*}
+            p = i\sqrt{\frac{\hbar m\omega}{2}}\left( a^{\dagger}-a \right),
+        \end{equation*}
+    \end{summary}
+
+    \begin{example}{}
+        Consider the harmonic oscillator states $\left| 0 \right\rangle = \left| E_0 \right\rangle, \ldots$ and suppose $\left| \phi\left( 0 \right) \right\rangle = \frac{1}{\sqrt{2}}\left( \left| n \right\rangle+\left| n+1 \right\rangle \right)$. What is $\left< x\left( t \right) \right>$? 
+    \end{example}
+
+    \begin{answer}
+        Observe that
+        \begin{equation*}
+            \left| \phi\left( t \right) \right\rangle = \frac{1}{\sqrt{2}} \left( e^{-\frac{i}{\hbar}E_nt}\left| n \right\rangle+e^{-\frac{i}{\hbar}E_{n+1}t}\left| n+1 \right\rangle \right) 
+            = \frac{1}{\sqrt{2}} \left( e^{-i\omega\left( n+\frac{1}{2} \right)t}\left| n \right\rangle+e^{-i\omega\left( n+\frac{3}{2} \right)t}\left| n+1 \right\rangle \right) ,
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \begin{aligned}
+                \left< x\left( t \right) \right> & = \left\langle \psi\left( t \right) \right|x\left| \psi\left( t \right) \right\rangle = \sqrt{\frac{\hbar}{2m\omega}}\left\langle \psi\left( t \right) \right| a+a^{\dagger} \left| \psi\left( t \right) \right\rangle \\
+                & = \sqrt{\frac{\hbar}{2m\omega}} \frac{1}{2} \left( \left\langle n \right|e^{i\omega\left( n+\frac{1}{2} \right)t}+\left\langle n+1 \right|e^{i\omega\left( n+\frac{3}{2} \right)t} \right) 
+                        \left( a+a^{\dagger} \right)\sqrt{\frac{\hbar}{2m\omega}} \frac{1}{2} \left( e^{-i\omega\left( n+\frac{1}{2} \right)t}\left| n \right\rangle+e^{-i\omega\left( n+\frac{3}{2} \right)t}\left| n+1 \right\rangle \right)  \\
+                & = \frac{1}{2}\sqrt{\frac{\hbar}{2m\omega}} \left(e^{i\omega+\left( n+\frac{3}{2} \right)t}  e^{-i\omega \left( n+\frac{1}{2} \right)t} \left\langle n+1 \right|a^{\dagger}\left| n \right\rangle + e^{i\omega\left( n+\frac{1}{2} \right)t}e^{-i\omega\left( n+\frac{3}{2} \right)t} \left\langle n \right|a\left| n+1 \right\rangle\right) \\
+                & = \frac{1}{2} \sqrt{\frac{\hbar}{2m\omega}} \left( e^{i\omega t} \sqrt{n+1} + e^{-i\omega t} \sqrt{n+1} \right) = \sqrt{\frac{\hbar\left( n+1 \right)}{2m\omega}} \cos\left( \omega t \right).
+            \end{aligned} 
+        \end{equation*}
+        Thus
+        \begin{equation*}
+            \left< x\left( t \right) \right> = \sqrt{\frac{\hbar\left( n+1 \right)}{2m\omega}}\cos\left( \omega t \right).
+        \end{equation*}
+    \end{answer}
+
+    \subsection{Angular Momentum Commutators}
+
+    We start with classical \textit{orbital angular momentum} (OAM):
+    \begin{equation*}
+        \vec{L} = \vec{r}\times\vec{p}.
+    \end{equation*}
+    By definition,
+    \begin{equation*}
+        \vec{L} = \begin{bmatrix} ypz-zp_y \\ zp_x-xp_z \\ xp_y-yp_x \end{bmatrix}.
+    \end{equation*}
+    We are going to use \textit{canonical commutation relations}
+    \begin{equation*}
+        \begin{aligned}
+            \left[ r_i,r_j \right] & = 0 \\
+            \left[ p_i,p_j \right] & = 0 \\
+            \left[ r_i,p_j \right] & = i\hbar\delta_{i,j}
+        \end{aligned} ,
+    \end{equation*}
+    where $r_1,r_2,r_3$ are position components (say $x,y,z$ for instance) and $p_1,p_2,p_3$ are the momentum components, to figure out $\left[ L_i,L_j \right]$. For instance,
+    \begin{equation*}
+        \left[ L_x,L_y \right] = \left[ yp_z-zp_y,zp_x-xp_z \right] = \left[ yp_z,zp_x \right]-\left[ zp_y,zp_x \right]-\left[ yp_z,xp_z \right]+\left[ zp_y,xp_z \right].
+    \end{equation*}
+    But note that $z$ commutes with itself and $p_y,p_z$ commutes, so that $\left[ zp_y,zp_x \right]=0$. Similarly, $x,y$ commutes so that $\left[ yp_z,xp_z \right]=0$. Hence,
+    \begin{equation*}
+        \left[ L_x,L_y \right] = \left[ yp_z,zp_x \right] + \left[ zp_y,xp_z \right] = y\left[ p_z,zp_x \right]+\left[ y,zp_x \right]p_z + \left[ zp_y,xp_z \right].
+    \end{equation*}
+    Since $y$ commutes with $z,p_x$, it follows $\left[ y,zp_x \right]=0$. This means
+    \begin{equation*}
+        \left[ L_x,L_y \right] = y\left[ p_z,zp_x \right]+\left[ zp_y,xp_z \right] = yz\underbrace{\left[ p_z,p_x \right]}_{=0} + y\left[ p_z,z \right]p_x+xz\underbrace{\left[ p_y,p_z \right]}_{=0}+x\left[ z,p_z \right]p_y = i\hbar\left( xp_y-yp_x \right) = i\hbar L_z.
+    \end{equation*}
+    Similarly, we have
+    \begin{equation*}
+        \left[ L_y,L_z \right] = i\hbar L_x, \left[ L_z,L_x \right] = i\hbar L_y.
+    \end{equation*}
+
+    \begin{summary}{Orbital Angular Momentum Commutation Relation}
+        Let $L = \left( L_x,L_y,L_z \right)$ be the orbital angular momentum operator. Then
+        \begin{equation*}
+            \left[ L_x,L_y \right] = i\hbar L_z, \left[ L_y,L_z \right] = i\hbar L_x, \left[ L_z,L_x \right] = i\hbar L_y.
+        \end{equation*}
+    \end{summary}
+
+    \np We are going to \textit{define} angular momentum operator $J$ as $J = \left( J_x,J_y,J_z \right)$ satisfying the above relations. That is,
+    \begin{equation*}
+        \left[ J_i,J_j \right] = i\hbar J_k \epsilon_{ijk}, \hspace{2cm}\forall i,j,k.
+    \end{equation*}
+    $\epsilon_{ijk}$ is the \textit{Levi-Civita symbol}.
+
+    Along with
+    \begin{equation*}
+        J^{2} = J_x^{2}+J_y^{2}+J_z^{2},
+    \end{equation*}
+    we can find quantization restrictions on amount of angular momentums.
+    
+    \begin{claim}
+        $\left[ J^{2},J_z \right] = 0$.
+
+        Observe that
+        \begin{equation*}
+            \begin{aligned}
+                \left[ J^{2},J_z \right] & = \left[ J_x^{2}+J_y^{2}+J_z^{2},J_z \right] = \left[ J_x^{2},J_z \right] + \left[ J_y^{2},J_z \right] + \underbrace{\left[ J_z^{2},J_z \right]}_{=0} \\
+                                         & = J_x\underbrace{\left[ J_x,J_z \right]}_{=-i\hbar L_y} + \left[ J_x,J_z \right]J_x + J_y\underbrace{\left[ J_y,J_z \right]}_{=i\hbar J_x} + \left[ J_y,J_z \right]J_y= -i\hbar J_xJ_y - i\hbar J_yJ_x + i\hbar J_yJ_x + i\hbar J_xJ_y = 0.
+            \end{aligned} 
+        \end{equation*}
+    \end{claim}
+
+    \np In a similar manner, we obtain that
+    \begin{equation*}
+        \left[ J^{2},J_x \right] = \left[ J^{2},J_y \right] = \left[ J^{2},J_z \right] = 0.
+    \end{equation*}
+    Hence we can find a common eigenbasis for $J^{2},J_i$ for all $i$.
+
+    \np We are also going to introduce \textit{ladder operators} for angular momentum (these operators are not the same as in quantum harmonic oscillators):
+    \begin{equation*}
+        J_{\pm} = J_x \pm iJ_y.
+    \end{equation*}
+    Observe that
+    \begin{equation*}
+        \left[ J^{2},J_{\pm} \right] = 0,
+    \end{equation*}
+    since $J_{\pm}$ is a linear combination of $J_x,J_y$ which commute with $J^{2}$. Also,
+    \begin{equation*}
+        \left[ J_z,J_{\pm} \right] = \left[ J_z,J_x \right]\pm i\left[ J_z,J_y \right] = i\hbar J_y \pm i\left( -i\hbar J_x \right) = i\hbar J_y\pm\hbar J_x = \pm\hbar\left( J_x\pm iJ_y \right) = \pm\hbar J_{\pm}.
+    \end{equation*}
+
+    \np Let us find the common eigenbasis for $J^{2},J_z$ first. Consider the system of eigenvalue equations
+    \begin{equation*}
+        \begin{aligned}
+            J^{2}\left| a,b \right\rangle & = a\left| a,b \right\rangle \\
+            J_z\left| a,b \right\rangle & = b\left| a,b \right\rangle
+        \end{aligned} .
+    \end{equation*}
+    Similar to how we did to harmonic oscillators, apply the raising operator $J_+$ to $\left| a,b \right\rangle$. Observe that
+    \begin{equation*}
+        J_z\left( J_+\left| a,b \right\rangle \right) = J_zJ_+\left| a,b \right\rangle = \left( J_+J_z+\hbar J_+ \right)\left| a,b \right\rangle = J_+b\left| a,b \right\rangle + \hbar J_+\left| a,b \right\rangle = \left( b+\hbar \right)J_+\left| a,b \right\rangle.
+    \end{equation*}
+    That is, $J_+\left| a,b \right\rangle$ is an eigenvector of $J_z$ corresponding to $b+\hbar$, so we may write
+    \begin{equation*}
+        J_+\left| a,b \right\rangle = c\left| a',b+\hbar \right\rangle
+    \end{equation*}
+    for some $a'$. In a similar manner, we have
+    \begin{equation*}
+        J^{2}J_+ = aJ_+\left| a,b \right\rangle,
+    \end{equation*}
+    so that $J_+\left| a,b \right\rangle$ is an eigenvector of $J^{2}$ corresponding to $a$, which means
+    \begin{equation}
+        J_{+}\left| a,b \right\rangle = c\left| a,b+\hbar \right\rangle.
+    \end{equation}
+    We can also get:
+    \begin{equation}
+        J_-\left| a,b \right\rangle = c'\left| a,b-\hbar \right\rangle.
+    \end{equation}
+    
+    \np Let us utilize [1.4], [1.5] to find which values of $a,b$ are allowed. 
+
+    \begin{claim}
+        $\left< J^{2}-J_z^{2} \right>_{\left| a,b \right\rangle}\geq 0$. 
+
+        Since $\left| a,b \right\rangle$ is an eigenvector of $J^{2},J_z$ corresponding to $a,b$, respectively,
+        \begin{equation*}
+            \left< J^{2}-J_z^{2} \right>_{\left| a,b \right\rangle} = a-b^{2}. 
+        \end{equation*}
+        We also have
+        \begin{equation*}
+            J^{2}-J_z^{2} = J_x^{2}+J_y^{2}+J_z^{2}-J_z^{2} = J_x^{2}+J_y^{2} = \frac{1}{2} \left( J_+J_-+J_-J_+ \right),
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \left< J^{2}-J_z^{2} \right> = \left< \frac{1}{2}\left( J_+J_-+J_-J_+ \right) \right> = \frac{1}{2} \left< J_+J_-+J_-J_+ \right>. 
+        \end{equation*}
+        Since $J_{\pm} = J_x\pm iJ_y$ where $J_x,J_y$ are Hermitian, it follows that $J_{\pm}^{\dagger} = J_{\mp}$. Therefore, $J_+J_-,J_-J_+$ are Hermitian. This means
+        \begin{equation*}
+            \left< J_+J_-+J_-J_+ \right> = \left< J_+J_+^{\dagger}+J_+^{\dagger}J_+ \right> = \left< J_+J_+^{\dagger} \right> + \left< J_+^{\dagger}J_+ \right> = \left\lVert J_+^{\dagger}\left| a,b \right\rangle\right\rVert + \left\lVert J_+\left| a,b \right\rangle\right\rVert \geq 0.
+        \end{equation*}
+    \end{claim}
+
+    \np Consequently,
+    \begin{equation*}
+        a-b^{2}\geq 0 \implies a\geq b^{2}.
+    \end{equation*}
+    Because of this define $b_{+}$ be the smallest value such that
+    \begin{equation*}
+        \left( b_{+}+\hbar \right)^{2}>a.
+    \end{equation*}
+    Using the properties of raising and lowering operators, we can write the value of $b_{+}$ in terms of $a$. For this $b_{+}$, we have
+    \begin{equation*}
+        J_+\left| a,b_{+} \right\rangle = 0.
+    \end{equation*}
+    Similarly, let $b_{-}$ be the largest value such that $\left( b_--\hbar \right)^{2}>a$, so that
+    \begin{equation*}
+        J_-\left| a,b_{-} \right\rangle = 0.
+    \end{equation*}
+    Then
+    \begin{equation*}
+        J_-J_+\left| a,b_{+} \right\rangle = 0,
+    \end{equation*}
+    where
+    \begin{equation*}
+        J_-J_+ = \left( J_x-iJ_y \right)\left( J_x+iJ_y \right) = \underbrace{J_x^{2}+J_y^{2}}_{=J^{2}-J_z^{2}}+i\underbrace{\left( J_xJ_y-J_yJ_x \right)}_{=\left[ J_x,J_y \right]=i\hbar J_z} = J^{2}-J_z^{2}-\hbar J_z.
+    \end{equation*}
+    This means
+    \begin{equation*}
+        0 = J_-J_+\left| a,b_{+} \right\rangle = \left( J^{2}-J_z^{2}-\hbar J_z \right)\left| a,b_+ \right\rangle = \left( a-b_+^{2}-\hbar b_+ \right)\left| a,b_+ \right\rangle,
+    \end{equation*}
+    solving which gives
+    \begin{equation}
+        a = b_+\left( b_++\hbar \right).
+    \end{equation}
+    In a similar manner, we obtain
+    \begin{equation}
+        a = b_-\left( b_--\hbar \right).
+    \end{equation}
+    Note [1.6], [1.7] are satisfied if $b_- = -b_+$.
+
+    Assuming that \textit{we can obtain $b_+$ by applying $J_+$ $n\in\N$ times on $b_-$}, we gain
+    \begin{equation*}
+        b_+ = b_-+n\hbar = -b_++n\hbar \implies b_+ = \frac{n\hbar}{2}.
+    \end{equation*}
+    It follows that
+    \begin{equation}
+        a = \frac{n\hbar}{2}\left( \frac{n\hbar}{2}+\hbar \right) = \hbar^{2} \frac{n}{2} \left( \frac{n}{2}+1 \right).
+    \end{equation}
+
+    Since the expression $\hbar \frac{n}{2}\left( \frac{n}{2}+1 \right)$ in [1.8] is \textit{ugly}, we substitute $j = \frac{n}{2}, m = \frac{b}{\hbar}$ so that
+    \begin{equation}
+        \begin{aligned}
+            J^{2}\left| j,m \right\rangle & = \hbar^{2}j\left( j+1 \right)\left| j,m \right\rangle \\
+            J_z\left| j,m \right\rangle & = \hbar m\left| j,m \right\rangle
+        \end{aligned} ,
+    \end{equation}
+    where $j$ is a half-integer and $m$ satisfy $m\in\left\lbrace -j,-j+1,\ldots,j-1,j \right\rbrace$.
+
+    [1.9] is the usual convention for angular momentum operators.
+
+    \begin{summary}{Angular Momentum Operators}
+        We define angular momentum operators $J = \left( J_x,J_y,J_z \right)$ as operators satisfying
+        \begin{equation*}
+            \left[ J_i,j_j \right] = i\hbar J_k\epsilon_{ijk}, \hspace{2cm}\forall i,j,k.
+        \end{equation*}
+        We define $J^{2} = J_x^{2}+J_y^{2}+J_z^{2}$, which commutes with $J_x,J_y,J_z$:
+        \begin{equation*}
+            \left[ J^{2},J_x \right] = \left[ J^{2},J_y \right] = \left[ J^{2},J_z \right] = 0.
+        \end{equation*}
+
+        The ladder operators are
+        \begin{equation*}
+            J_+ = J_x+iJ_y, J_- = J_x-iJ_y,
+        \end{equation*}
+        which are also called the raising and lowering operators. Then
+        \begin{equation*}
+            \left[ J_z,J_{\pm} \right] = \pm\hbar J_{\pm}.
+        \end{equation*}
+
+        The eigenvalues of $J^{2},J_z$ are
+        \begin{equation*}
+            \begin{aligned}
+                J^{2}\left| j,m \right\rangle & = \hbar^{2}j\left( j+1 \right)\left| j,m \right\rangle \\
+                J_z\left| j,m \right\rangle & = \hbar m\left| j,m \right\rangle
+            \end{aligned} ,
+        \end{equation*}
+        where $j$ is a half-integer and $m\in\left\lbrace -j,-j+1,\ldots,j \right\rbrace$. 
+    \end{summary}
+
+    \np Notationally, we write $J = L$ and $j=l$ for orbital angular momentum and $J=S$ and $j=s$ for spin angular momentum.
+
+    \np In case $J = L$, an orbital angular momentum, the only allowed values of $j=l$ are integers. But in case $J=S$, a spin angular momentum, any half integer $j=s$ is allowed.
+
+    \np Let us find the matrix representation of the operators. Since
+    \begin{equation*}
+        J_{\pm} \left| j,m \right\rangle = c_{\pm}\left| j,m\pm 1 \right\rangle
+    \end{equation*}
+    for some constants $c_{\pm}$,
+    \begin{equation*}
+        \left\langle j,m \right|J_-J_+\left| j,m \right\rangle = \left| c_+ \right|^{2} \left\langle j,m | j,m \right\rangle = \left| c_+ \right|^{2}.
+    \end{equation*}
+    But we also know that
+    \begin{equation*}
+        J_-J_+ = \cdots = J^{2}-J_z^{2}-\hbar J_z,
+    \end{equation*}
+    so that
+    \begin{equation*}
+        \left| c_+ \right|^{2} = \left\langle j,m \right|J_-J_+\left| j,m \right\rangle = \hbar^{2}j\left( j+1 \right)-\left( \hbar m \right)^{2}-\hbar^{2}m = \hbar^{2}\left( j\left( j+1 \right)-m\left( m+1 \right) \right).
+    \end{equation*}
+    Ignoring global phase, it follows
+    \begin{equation*}
+        c_+ = \hbar\sqrt{j\left( j+1 \right)-m\left( m+1 \right)},
+    \end{equation*}
+    so that
+    \begin{equation*}
+        J_+\left| j,m \right\rangle = \hbar\sqrt{j\left( j+1 \right)-m\left( m+1 \right)}.
+    \end{equation*}
+    In a similar manner, we find
+    \begin{equation*}
+        J_-\left| j,m \right\rangle = \hbar\sqrt{j\left( j+1 \right)-m\left( m-1 \right)}.
+    \end{equation*}
+    We can use this to find matrix representations.
+
+    \begin{example}{}
+        Suppose $j=\frac{1}{2}$, so that we have two eigenstates
+        \begin{equation*}
+            \begin{aligned}
+                \left| 1 \right\rangle & = \left| \frac{1}{2},\frac{1}{2} \right\rangle \\
+                \left| 0 \right\rangle & = \left| \frac{1}{2},-\frac{1}{2} \right\rangle
+            \end{aligned} .
+        \end{equation*}
+        Then $J_z\left| 1 \right\rangle = \frac{\hbar}{2}\left| 1 \right\rangle, J_z\left| 0 \right\rangle = \frac{\hbar}{2}\left| 0 \right\rangle$, so that
+        \begin{equation*}
+            J_z = \frac{\hbar}{2} \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}
+        \end{equation*}
+        is the matrix representation of $J_z$.
+
+        For $J_x$, recall
+        \begin{equation*}
+            J_x = \frac{1}{2}\left( J_+-J_- \right).
+        \end{equation*}
+        The matrix representation of $J_+$ is
+        \begin{equation*}
+            J_+ =
+            \begin{bmatrix}
+            	0 & \hbar \\
+            	0 & 0 \\
+            \end{bmatrix}.
+        \end{equation*}
+        On the other hand,
+        \begin{equation*}
+            J_- = 
+            \begin{bmatrix}
+            	0 & 0 \\
+            	\hbar & 0 \\
+            \end{bmatrix},
+        \end{equation*}
+        so that
+        \begin{equation*}
+            J_x = \frac{\hbar}{2} 
+            \begin{bmatrix}
+            	0 & 1 \\
+            	1 & 0 \\
+            \end{bmatrix}.
+        \end{equation*}
+
+        In a similar manner,
+        \begin{equation*}
+            J_y = -\frac{i}{2}\left( J_+-J_- \right) = \frac{\hbar}{2}
+            \begin{bmatrix}
+            	0 & -i \\
+            	i & 0 \\
+            \end{bmatrix}
+        \end{equation*}
+
+        Squaring each $J_x,J_y,J_z$, we obtain
+        \begin{equation*}
+            J^{2} = \frac{3}{4}\hbar^{2}
+            \begin{bmatrix}
+            	1 & 0 \\
+            	0 & 1 \\
+            \end{bmatrix}.
+        \end{equation*}
+    \end{example}
+    
+    \rruleline
+
+    \subsection{Spherical Harmonics}
+
+    \np Consider $\vec{L}=\vec{r}\times\vec{p}$. We expect to see
+    \begin{equation*}
+        \begin{aligned}
+            J^{2}\left| j,m \right\rangle & = \hbar^{2}j\left( j+1 \right)\left| j,m \right\rangle \\
+            J_z\left| j,m \right\rangle & = \hbar m\left| j,m \right\rangle
+        \end{aligned} .
+    \end{equation*}
+    Moreover, we want an explicit form of $\left| l,m \right\rangle$ in 3D coorinates. To do so, we can use
+    \begin{equation*}
+        L_z = -i\hbar x\partial_y + i\hbar y\partial_x
+    \end{equation*}
+    or use \textit{spherical coordinates}. That is
+    \begin{equation*}
+        \vec{L} = \vec{r}\times\vec{p} = -i\hbar\vec{r}\times\vec{\nabla},
+    \end{equation*}
+    where
+    \begin{equation*}
+        \vec{\nabla} = \hat{r}\partial_r + \frac{1}{r}\hat{\theta} \partial_{\theta} + \frac{1}{r\sin\left( \theta \right)} \hat{\phi}\partial_{\phi} .
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \begin{aligned}
+            L^{2} & = -\hbar^{2} \left( \frac{\partial^{2}}{\partial\theta^{2}} + \cot\left( \theta \right) \frac{\partial}{\partial\theta} + \frac{1}{\sin^{2}\left( \theta \right)} \frac{\partial^{2}}{\partial\phi^{2}} \right) \\
+            L_x & = -i\hbar\left( -\sin\left( \phi \right)\partial_{\theta} - \cot\left( \theta \right)\cos\left( \phi \right)\partial_{\phi} \right) \\
+            L_y & = -i\hbar\left( \cos\left( \phi \right)\partial_{\theta} - \cot\left( \theta \right)\sin\left( \phi \right)\partial_{\phi} \right) \\
+            L_z & = -i\hbar\partial_{\phi}
+        \end{aligned}. 
+    \end{equation*}
+    Observe that $L^{2},L_x,L_y,L_z$ \textit{does not depend} on the radial coordinate $r$. Hence an eigenfunction of $L^{2},L_z$ depends only on $\theta,\phi$, say
+    \begin{equation*}
+        \begin{aligned}
+            L^{2}Y\left( \theta,\phi \right) & = \hbar^{2}l\left( l+1 \right)Y\left( \theta,\phi \right) \\
+            L_zY\left( \theta,\phi \right) & = \hbar mY\left( \theta,\phi \right)
+        \end{aligned} .
+    \end{equation*}
+
+    As an \textit{ansatz}, suppose
+    \begin{equation*}
+        Y\left( \theta,\phi \right) = \Theta\left( \theta \right)\Phi\left( \phi \right).
+    \end{equation*}
+    In this case,
+    \begin{equation*}
+        L_zY\left( \theta,\phi \right) = \hbar mY\left( \theta,\phi \right)
+    \end{equation*}
+    becomes a differential equation
+    \begin{equation*}
+        -i\hbar\partial_{\phi} \Theta\Phi = \hbar m\Theta\Phi.
+    \end{equation*}
+    But $\Theta$ only depends on $\theta$, so that
+    \begin{equation*}
+        -i\hbar\partial_{\phi}\Phi = \hbar m\Phi \implies \Phi\left( \theta \right) = e^{im\phi}.
+    \end{equation*}
+    By the $2\pi$ periodicy of $e^{i\theta}$, we have
+    \begin{equation}
+        e^{im\phi} = e^{im\phi}e^{2\pi mi}.
+    \end{equation}
+    Observe that [1.10] is satisfied if and only if $m$ is an integer. This is why for orbital angular momentums integer values of $m$ are only permitted values.
+
+    Now that we know how $\Phi$ looks like, we have
+    \begin{equation*}
+        L^{2}Y\left( \theta,\phi \right) = L^{2}e^{im\phi}\Theta\left( \theta \right). = \hbar^{2} l\left( l+1 \right)e^{im\phi}\Theta\left( \theta \right)
+    \end{equation*}
+    Recall that
+    \begin{equation*}
+        L^{2} = -\hbar^{2}\left( \partial_{\theta}^{2}+\cot\left( \theta \right)\partial_{\theta}+\frac{1}{\sin^{2}\left( \theta \right)}\partial_{\phi}^{2} \right) ,
+    \end{equation*}
+    so that we have
+    \begin{equation*}
+        -\hbar^{2}\left( \partial_{\theta}^{2}+\cot\left( \theta \right)\partial_{\theta}+\frac{1}{\sin^{2}\left( \theta \right)}\partial_{\phi}^{2} \right) e^{im\phi}\Theta\left( \theta \right) = \hbar^{2} l\left( l+1 \right)\Phi\left( \theta \right).
+    \end{equation*}
+    Cancelling out $\hbar^{2},e^{im\phi}$,
+    \begin{equation*}
+        -\partial_{\theta}^{2}\Theta-\cot\left( \theta \right)\partial_{\theta}\Theta-\frac{1}{\sin^{2}\left( \theta \right)}\partial_{\phi}^{2} \left( -m^{2} \right)\Theta = l\left( l+1 \right)\Theta,
+    \end{equation*}
+    or
+    \begin{equation}
+        \left(-\partial_{\theta}^{2}-\cot\left( \theta \right)\partial_{\theta}+\frac{m^{2}}{\sin^{2}\left( \theta \right)}\partial_{\phi}^{2} - l\left( l+1 \right)\right) \Theta = 0,
+    \end{equation}
+    which is of the form of the \textit{general Legendre equation}. A general solution to [1.11] is
+    \begin{equation*}
+        \Theta = P_l^m\left(\cos\left( \theta \right)\right),
+    \end{equation*}
+    where the \textit{Legendre polynomial} $P_l^m$ is
+    \begin{equation*}
+        P_l^m = \left( 1-x^{2} \right)^{\frac{\left| m \right|}{2}} \left( \frac{d}{dx} \right)^{\left| m \right|} P_l
+    \end{equation*}
+    and
+    \begin{equation}
+        P_l = \frac{1}{2^ll!}\left( \frac{d}{dx} \right)^l \left( x^{2}-1 \right)^l.
+    \end{equation}
+    Since [1.12] is \textit{usually} defined for nonnegative integer $l$ only, it puts additional restriction on $l$: $l\in\N\cup\left\lbrace 0 \right\rbrace$.
+
+    In conclusion, the spherical harmonics $Y_l^m\left( \theta,\phi \right)$ have the form
+    \begin{equation*}
+        Y_l^m = A P_l^m\left( \cos\left( \theta \right) \right)e^{im\phi},
+    \end{equation*}
+    where $A$ is a normalization constant. $Y_l^m\left( \theta,\phi \right)$ are the eigenstates of $L^{2},L_z$ with eigenvalues $\hbar^{2}l\left( l+1 \right),\hbar m$. The collection $\left\lbrace Y_l^m \right\rbrace$ is an orthonormal basis for the space of functions of $\theta,\phi$.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+
+\end{document}
